@@ -2,7 +2,7 @@ import { findAllRoutes } from "service/scanner";
 import { hack } from "helpers/hack";
 import { canHackHost } from "helpers/can-hack-host";
 
-export class Botnet {
+export class BotnetSimple {
 
   targets = {};
 
@@ -24,11 +24,11 @@ export class Botnet {
     let scriptTarget = this.config['target'];
 
     for (let host in this.routes) {
-      if (canHackHost(ns, host)) {
+      if (canHackHost(this.ns, host)) {
 
         hack(this.ns, host, this.ns.getServerNumPortsRequired(host))
 
-        if (!host in this.targets && this.targets[host] === scriptTarget) {
+        if (!(host in this.targets) && this.targets[host] !== scriptTarget) {
           this.ns.killall(host);
           
           let nodesAmount = Math.floor(this.ns.getServerMaxRam(host) / this.ns.getScriptRam(scriptName));

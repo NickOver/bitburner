@@ -4,7 +4,7 @@
  * @param {number} portsAmount 
  */
 export function hack(ns, host, portsAmount) {
-  if (!this.ns.hasRootAccess(host)) {
+  if (!ns.hasRootAccess(host)) {
     if (portsAmount >= 1) try { ns.brutessh(host); } catch { }
     if (portsAmount >= 2) try { ns.ftpcrack(host); } catch { }
     if (portsAmount >= 3) try { ns.relaysmtp(host); } catch { }

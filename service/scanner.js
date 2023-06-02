@@ -17,3 +17,35 @@ export function findAllRoutes(ns) {
 
   return routes;
 }
+
+/**
+ * 
+ * @param {NS} ns 
+ * @returns object
+ */
+export function findAllPossibleTargets(ns) {
+  let servers = ['home'];
+  let targets = [];
+  let purchasedServers = ns.getPurchasedServers().concat(['home']);
+
+  for (let i = 0; i < servers.length; i++) {
+    for (let server of ns.scan(servers[i])) {
+      if (!servers.includes(server)) {
+        servers.push(server);
+      }
+    }
+  }
+
+  for (let server of servers) {
+    if (
+      !purchasedServers.includes(server) &&
+      ns.hasRootAccess(server) &&
+      ns.getServerMoneyAvailable(server) > 0 &&
+      ns.getServerRequiredHackingLevel(server) <= ns.getHackingLevel() / 2
+    ) {
+      targets.push(server);
+    }
+  }
+
+  return targets;
+}

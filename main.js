@@ -1,4 +1,5 @@
-import { Botnet } from "modules/botnet";
+import { BotnetSimple } from "modules/botnet-simple";
+import { Server } from "modules/server";
 import { getConfig } from "service/config"
 
 /** @param {NS} ns */
@@ -9,7 +10,8 @@ export async function main(ns) {
   let config = getConfig(ns);
 
   let modules = [
-    new Botnet(ns, config['botnet']),
+    new BotnetSimple(ns, config['botnet']),
+    new Server(ns, config['server']),
   ]
 
   while (true) {
