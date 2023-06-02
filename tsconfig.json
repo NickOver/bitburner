@@ -5,13 +5,13 @@
     "rootDir": "src/",
     "baseUrl": "src/",
     "paths": {
-      "/lib/*": [
-        "lib/*"
+      "/Lib/*": [
+        "Lib/*"
       ]
     },
     "outDir": "build/",
     "moduleResolution": "node",
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-  }
+  },
 }

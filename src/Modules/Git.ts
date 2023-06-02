@@ -1,4 +1,4 @@
-import { dump } from "helpers/dump";
+import { NS } from "Bitburner";
 
 const userName = 'NickOver';
 const repoName = 'bitburner';
@@ -10,13 +10,12 @@ const skipNames = [
   'jsconfig.json',
 ]
 
-var dirsToScan = [];
-var filesList = [];
+var dirsToScan: string[] = [];
+var filesList: string[] = [];
 
-/** @param {NS} ns */
-export async function main(ns) {
-  dirsToScan = [baseDir];
-  filesList = [];
+export async function main(ns: NS) {
+  this.dirsToScan = [baseDir];
+  this.filesList = [];
   
   const args = ns.flags([['clear', false]]);
 
@@ -28,8 +27,7 @@ export async function main(ns) {
   await downloadFiles(ns);
 }
 
-/** @param {NS} ns */
-function removeAllJsFiles(ns) {
+function removeAllJsFiles(ns: NS) {
   let currentScriptName = ns.getScriptName();
 
   for (let file of ns.ls('home', '.js')) {
@@ -39,8 +37,7 @@ function removeAllJsFiles(ns) {
   }
 }
 
-/** @param {NS} ns */
-async function scanDirectories(ns) {
+async function scanDirectories(ns: NS) {
   for (let i = 0; i < dirsToScan.length; i++) {
     if (await downloadFile(ns, dirsToScan[i], tempFile)) {
       processSourceTree(JSON.parse(ns.read(tempFile)));
@@ -49,14 +46,13 @@ async function scanDirectories(ns) {
   }
 }
 
-/** @param {NS} ns */
-async function downloadFiles(ns) {
+async function downloadFiles(ns: NS) {
   for (let file of filesList) {
     if (await downloadFile(ns, file, 'temp/' + file)) {
       let content = JSON.parse(ns.read('temp/' + file))['content'];
       let localFileName = file.replace(baseDir + '/', '');
       
-      ns.write(localFileName, atob(content), "w");
+      ns.write(localFileName, [atob(content)], "w");
       ns.rm('temp/' + file, 'home');
     }
   }
@@ -64,13 +60,7 @@ async function downloadFiles(ns) {
   ns.toast("All files downloaded successfully!", "success");
 }
 
-/**
- * @param {NS} ns 
- * @param {string} path 
- * @param {string} file 
- * @returns bool
- */
-async function downloadFile(ns, path, file) {
+async function downloadFile(ns: NS, path: string, file: string): Promise<boolean> {
   return ns.wget(
     'https://api.github.com/repos/' + userName + '/' + repoName + '/contents/' + path,
     file,
@@ -78,8 +68,7 @@ async function downloadFile(ns, path, file) {
   )
 }
 
-/** @param {Array} sourceTree */
-function processSourceTree(sourceTree) {
+function processSourceTree(sourceTree: Array<any>) {
   for (let node of sourceTree) {
     if (skipNames.includes(node['name'])) {
       continue;
