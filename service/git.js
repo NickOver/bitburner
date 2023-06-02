@@ -49,7 +49,11 @@ async function scanDirectories(ns) {
 /** @param {NS} ns */
 async function downloadFiles(ns) {
   for (let file of filesList) {
-    await downloadFile(ns, file, file);
+    if (await downloadFile(ns, file, 'temp/' + file)) {
+      let content = JSON.parse(ns.read('temp/' + file))['content'];
+      ns.write(file, atob(content), "w");
+      ns.rm('temp/' + file, 'home');
+    }
   }
 }
 
