@@ -5078,7 +5078,7 @@ declare module "Bitburner" {
        */
       write(
           handle: string,
-          data?: string[] | number,
+          data?: string | number,
           mode?: "w" | "a"
       ): Promise<void>;
 

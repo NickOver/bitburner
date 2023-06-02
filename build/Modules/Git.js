@@ -39,7 +39,7 @@ async function downloadFiles(ns) {
         if (await downloadFile(ns, file, 'temp/' + file)) {
             let content = JSON.parse(ns.read('temp/' + file))['content'];
             let localFileName = file.replace(baseDir + '/', '');
-            ns.write(localFileName, [atob(content)], "w");
+            ns.write(localFileName, atob(content), "w");
             ns.rm('temp/' + file, 'home');
         }
     }
