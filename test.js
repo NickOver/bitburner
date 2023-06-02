@@ -1,19 +1,25 @@
 import { dump } from "helpers/dump"
 import { hack } from "helpers/hack";
 // import { BotnetComplex } from "modules/botnet-complex"
-// import { findAllPossibleTargets } from "service/scanner"
+import { findAllPossibleTargets, findAllRoutes } from "service/scanner"
 
 /** @param {NS} ns */
 export async function main(ns) {
-  // let a = new BotnetComplex(ns, {});
+  // let a = findAllRoutes(ns);
 
-  let host = 'foodnstuff';
+  // for (let b in a) {
+  //   ns.killall(b);
+  // }
+
+  ns.exec('hacks/grow.js', 'cassandra-64', 72, 'n00dles')
+
+  // let host = 'foodnstuff';
   // a.run()
   // await ns.hack('n00dles');
   // dump(ns, .5 * ns.getServerMaxMoney(host) / ns.getServerMoneyAvailable(host));
   // dump(ns, , 9.536710071167548));
-  dump(ns, ns.getServerMoneyAvailable(host));
-  dump(ns, ns.hackAnalyzeChance(host));
+  // dump(ns, ns.getServerMoneyAvailable(host));
+  // dump(ns, ns.hackAnalyzeChance(host));
   // await ns.hack('n00dles');
 }
 

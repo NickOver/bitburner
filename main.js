@@ -16,8 +16,6 @@ export async function main(ns) {
     new BotnetComplex(ns, config['botnet-complex'])
   ]
 
-  return;
-
   while (true) {
     for (let key in modules) {
       modules[key].run()

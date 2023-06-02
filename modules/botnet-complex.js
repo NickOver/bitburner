@@ -10,33 +10,34 @@ export class BotnetComplex {
   constructor(ns, config) {
     this.ns = ns;
     this.config = config;
-    this.botnetManager = new BotnetManager(ns, [])
+    this.botnetManager = new BotnetManager(ns, this.config)
+    this.botnetManager.initialize();
 
-    this.ns.disableLog('ALL');
+    // this.ns.disableLog('ALL');
     
     this.targets = this.getSortedTargets();
   }
 
   run() {
-    for (let target in this.targets) {
+    for (let target of this.targets) {
       let result = true;
 
-      let growthAmount = .5 * ns.getServerMaxMoney(target) / ns.getServerMoneyAvailable(target);
+      let growthAmount = .5 * this.ns.getServerMaxMoney(target) / this.ns.getServerMoneyAvailable(target);
 
-      if (this.ns.getServerSecurityLevel(target) < this.ns.getServerMinSecurityLevel() + 5) {
-        let requiredThreads = Math.ceil((this.ns.getServerSecurityLevel(target) - this.ns.getServerMinSecurityLevel()) / 0.05);
+      if (this.ns.getServerSecurityLevel(target) < this.ns.getServerMinSecurityLevel(target) + 5) {
+        let requiredThreads = Math.ceil((this.ns.getServerSecurityLevel(target) - this.ns.getServerMinSecurityLevel(target)) / 0.05);
 
         result = this.startThreadsIfNotWorking('weaken', target, requiredThreads);
 
       } else if (growthAmount > 0) {
-        let requiredThreads = Math.ceil(this.ns.growthAnalyze(host, growthAmount));
+        let requiredThreads = Math.ceil(this.ns.growthAnalyze(target, growthAmount));
 
         result = this.startThreadsIfNotWorking('grow', target, requiredThreads)
 
       } else if (this.ns.getServerMaxMoney(target) * 0.75 < this.ns.getServerMoneyAvailable(target)) {
         let requiredThreads = Math.ceil(this.ns.hackAnalyzeThreads(
             target, this.ns.getServerMoneyAvailable(target) - this.ns.getServerMaxMoney(target) * 0.75
-        ) / this.ns.hackAnalyzeChance(host));
+        ) / this.ns.hackAnalyzeChance(target));
 
         result = this.startThreadsIfNotWorking('hack', target, requiredThreads)
       }

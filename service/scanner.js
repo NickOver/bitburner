@@ -26,7 +26,7 @@ export function findAllRoutes(ns) {
 export function findAllPossibleTargets(ns) {
   let servers = ['home'];
   let targets = [];
-  let purchasedServers = ns.getPurchasedServers().concat(['home']);
+  let purchasedServers = ['home'];
 
   for (let i = 0; i < servers.length; i++) {
     for (let server of ns.scan(servers[i])) {

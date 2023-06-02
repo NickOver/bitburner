@@ -1,3 +1,5 @@
+import { dump } from "helpers/dump";
+
 export class BotnetManager {
 
   servers = [];
@@ -31,6 +33,8 @@ export class BotnetManager {
     for (let server of this.servers) {
       let availableThreads = Math.floor(this.ns.getServerMaxRam(server) / scriptRam);
       let threadsCount = Math.min(threads, availableThreads);
+
+      dump(this.ns, [script, target, threads, availableThreads, threadsCount]);
 
       this.ns.exec(this.config['scripts'][script], server, threadsCount, target);
       threads -= threadsCount;

@@ -13,7 +13,7 @@ const config = {
   'botnet-complex': {
     'scripts': {
       'hack': 'hacks/hack.js',
-      'analyze': 'hacks/analyze.js',
+      'grow': 'hacks/grow.js',
       'weaken': 'hacks/weaken.js',
     }
   }

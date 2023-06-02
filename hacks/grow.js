@@ -2,5 +2,5 @@
 export async function main(ns) {
   const target = ns.args[0];
 
-  ns.grow(target);
+  await ns.grow(target);
 }
