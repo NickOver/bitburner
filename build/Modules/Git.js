@@ -10,9 +10,8 @@ const skipNames = [
 var dirsToScan = [];
 var filesList = [];
 export async function main(ns) {
-    this.dirsToScan = [baseDir];
-    this.filesList = [];
     const args = ns.flags([['clear', false]]);
+    dirsToScan.push(baseDir);
     if (args.clear) {
         removeAllJsFiles(ns);
     }

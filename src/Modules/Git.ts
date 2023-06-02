@@ -3,7 +3,7 @@ import { NS } from "Bitburner";
 const userName = 'NickOver';
 const repoName = 'bitburner';
 const tempFile = 'temp/file.txt';
-const baseDir = 'build';
+const baseDir: string = 'build';
 const skipNames = [
   '.vscode',
   'NetscriptDefinitions.d.ts',
@@ -13,11 +13,10 @@ const skipNames = [
 var dirsToScan: string[] = [];
 var filesList: string[] = [];
 
-export async function main(ns: NS) {
-  this.dirsToScan = [baseDir];
-  this.filesList = [];
-  
+export async function main(ns: NS) { 
   const args = ns.flags([['clear', false]]);
+
+  dirsToScan.push(baseDir);
 
   if (args.clear) {
     removeAllJsFiles(ns);
