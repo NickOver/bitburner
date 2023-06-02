@@ -1,0 +1,1 @@
+alias git="run service/git.js --clear"
