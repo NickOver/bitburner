@@ -6,7 +6,7 @@ import { getConfig } from "service/config"
 /** @param {NS} ns */
 export async function main(ns) {
 
-  const SLEEP_TIME = 10000 //10s
+  const SLEEP_TIME = 1000 //1s
   
   let config = getConfig(ns);
 

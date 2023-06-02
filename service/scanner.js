@@ -41,7 +41,7 @@ export function findAllPossibleTargets(ns) {
       !purchasedServers.includes(server) &&
       ns.hasRootAccess(server) &&
       ns.getServerMoneyAvailable(server) > 0 &&
-      ns.getServerRequiredHackingLevel(server) <= ns.getHackingLevel() / 2
+      ns.getServerRequiredHackingLevel(server) <= ns.getHackingLevel()
     ) {
       targets.push(server);
     }

@@ -13,9 +13,10 @@ export class BotnetComplex {
     this.botnetManager = new BotnetManager(ns, this.config)
     this.botnetManager.initialize();
 
-    // this.ns.disableLog('ALL');
+    this.ns.disableLog('ALL');
     
     this.targets = this.getSortedTargets();
+    // this.targets = ['n00dles'];
   }
 
   run() {
@@ -24,19 +25,21 @@ export class BotnetComplex {
 
       let growthAmount = .5 * this.ns.getServerMaxMoney(target) / this.ns.getServerMoneyAvailable(target);
 
-      if (this.ns.getServerSecurityLevel(target) < this.ns.getServerMinSecurityLevel(target) + 5) {
+      if (this.ns.getServerSecurityLevel(target) > this.ns.getServerMinSecurityLevel(target)) {
         let requiredThreads = Math.ceil((this.ns.getServerSecurityLevel(target) - this.ns.getServerMinSecurityLevel(target)) / 0.05);
-
+        
         result = this.startThreadsIfNotWorking('weaken', target, requiredThreads);
+      } 
 
-      } else if (growthAmount > 0) {
+      if (growthAmount > 1) {
         let requiredThreads = Math.ceil(this.ns.growthAnalyze(target, growthAmount));
 
         result = this.startThreadsIfNotWorking('grow', target, requiredThreads)
+      }
 
-      } else if (this.ns.getServerMaxMoney(target) * 0.75 < this.ns.getServerMoneyAvailable(target)) {
+      if (this.ns.getServerMaxMoney(target) * 0.5 < this.ns.getServerMoneyAvailable(target)) {
         let requiredThreads = Math.ceil(this.ns.hackAnalyzeThreads(
-            target, this.ns.getServerMoneyAvailable(target) - this.ns.getServerMaxMoney(target) * 0.75
+            target, this.ns.getServerMoneyAvailable(target) - this.ns.getServerMaxMoney(target) * 0.5
         ) / this.ns.hackAnalyzeChance(target));
 
         result = this.startThreadsIfNotWorking('hack', target, requiredThreads)
@@ -56,5 +59,7 @@ export class BotnetComplex {
     if (requiredThreads > this.botnetManager.getWorkingThreadsForScript(script, target)) {
       return this.botnetManager.startThreads(script, target, requiredThreads);
     }
+
+    return true;
   }
 }

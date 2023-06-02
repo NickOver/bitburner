@@ -11,7 +11,10 @@ export async function main(ns) {
   //   ns.killall(b);
   // }
 
-  ns.exec('hacks/grow.js', 'cassandra-64', 72, 'n00dles')
+  // ns.exec('hacks/grow.js', 'cassandra-64', 72, 'n00dles')
+
+  dump(ns, ns.getServerMinSecurityLevel('hong-fang-tea'))
+  dump(ns, ns.getServerSecurityLevel('hong-fang-tea'))
 
   // let host = 'foodnstuff';
   // a.run()

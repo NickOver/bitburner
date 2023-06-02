@@ -34,7 +34,14 @@ export class BotnetManager {
       let availableThreads = Math.floor(this.ns.getServerMaxRam(server) / scriptRam);
       let threadsCount = Math.min(threads, availableThreads);
 
-      dump(this.ns, [script, target, threads, availableThreads, threadsCount]);
+      // dump(this.ns, threadsCount);
+      // this.ns.tprintf(
+      //   'Starting %s against %s on %s with %s threads.',
+      //   this.config['scripts'][script],
+      //   target,
+      //   server,
+      //   threadsCount
+      // );
 
       this.ns.exec(this.config['scripts'][script], server, threadsCount, target);
       threads -= threadsCount;
@@ -54,7 +61,7 @@ export class BotnetManager {
       let processes = this.ns.ps(server);
       for (let process of processes) {
         if (process['filename'] === this.config['scripts'][script] && process['args'][0] === target) {
-          runningScripts += process[threads];
+          runningScripts += process['threads'];
         }
       }
     }
