@@ -55,6 +55,8 @@ async function downloadFiles(ns) {
       ns.rm('temp/' + file, 'home');
     }
   }
+
+  ns.toast("All files downloaded successfully!", "success");
 }
 
 /**

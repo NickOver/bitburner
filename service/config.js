@@ -9,6 +9,13 @@ const config = {
     'server_amount': 50,
     'server_ram_level': 13,
     'server_name': 'testowys'
+  },
+  'botnet-complex': {
+    'scripts': {
+      'hack': 'hacks/hack.js',
+      'analyze': 'hacks/analyze.js',
+      'weaken': 'hacks/weaken.js',
+    }
   }
 };
 

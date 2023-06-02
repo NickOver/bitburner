@@ -1,3 +1,4 @@
+import { BotnetComplex } from "modules/botnet-complex";
 import { BotnetSimple } from "modules/botnet-simple";
 import { Server } from "modules/server";
 import { getConfig } from "service/config"
@@ -10,9 +11,12 @@ export async function main(ns) {
   let config = getConfig(ns);
 
   let modules = [
-    new BotnetSimple(ns, config['botnet']),
-    new Server(ns, config['server']),
+    // new BotnetSimple(ns, config['botnet']),
+    // new Server(ns, config['server']),
+    new BotnetComplex(ns, config['botnet-complex'])
   ]
+
+  return;
 
   while (true) {
     for (let key in modules) {
