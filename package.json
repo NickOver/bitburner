@@ -1,5 +1,9 @@
 {
   "scripts": {
+    "push": "npm run buildTs && git add . && git commit -m \"TMP\" && git push",
+
+
+
     "build": "npm run buildTs && npm run buildManifest",
     "buildTs": "tsc -p tsconfig.json",
     "buildManifest": "npm run lib/generateManifest.js",
