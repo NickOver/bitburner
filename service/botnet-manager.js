@@ -1,4 +1,4 @@
-import { dump } from "helpers/dump";
+import { findAllRoutes } from "service/scanner";
 
 export class BotnetManager {
 
@@ -10,8 +10,6 @@ export class BotnetManager {
   constructor(ns, config) {
     this.ns = ns;
     this.config = config;
-
-    this.servers = this.ns.getPurchasedServers();
   }
 
   initialize() {
@@ -28,10 +26,11 @@ export class BotnetManager {
   }
 
   startThreads(script, target, threads) {
+    this.getServers();
     let scriptRam = this.ns.getScriptRam(this.config['scripts'][script]);
 
     for (let server of this.servers) {
-      let availableThreads = Math.floor(this.ns.getServerMaxRam(server) / scriptRam);
+      let availableThreads = Math.floor((this.ns.getServerMaxRam(server) - this.ns.getServerUsedRam(server)) / scriptRam);
       let threadsCount = Math.min(threads, availableThreads);
 
       // dump(this.ns, threadsCount);
@@ -43,8 +42,10 @@ export class BotnetManager {
       //   threadsCount
       // );
 
-      this.ns.exec(this.config['scripts'][script], server, threadsCount, target);
-      threads -= threadsCount;
+      if (threadsCount > 0) {
+        this.ns.exec(this.config['scripts'][script], server, threadsCount, target);
+        threads -= threadsCount;
+      }
 
       if (threads <= 0) {
         return true;
@@ -69,5 +70,13 @@ export class BotnetManager {
     return runningScripts;
   }
 
+  getServers() {
+    this.servers = this.ns.getPurchasedServers();
 
+    for (let host in findAllRoutes(this.ns)) {
+      if (this.ns.hasRootAccess(host) && !this.servers.includes(host)) {
+        this.servers.push(host)
+      }
+    }
+  }
 }

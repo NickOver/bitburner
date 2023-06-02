@@ -13,28 +13,29 @@ export class BotnetComplex {
     this.botnetManager = new BotnetManager(ns, this.config)
     this.botnetManager.initialize();
 
-    this.ns.disableLog('ALL');
-    
-    this.targets = this.getSortedTargets();
+    // this.ns.disableLog('ALL');
     // this.targets = ['n00dles'];
   }
 
   run() {
-    for (let target of this.targets) {
-      let result = true;
-
+    for (let target of this.getSortedTargets()) {
+      this.ns.print(target);
       let growthAmount = .5 * this.ns.getServerMaxMoney(target) / this.ns.getServerMoneyAvailable(target);
 
       if (this.ns.getServerSecurityLevel(target) > this.ns.getServerMinSecurityLevel(target)) {
         let requiredThreads = Math.ceil((this.ns.getServerSecurityLevel(target) - this.ns.getServerMinSecurityLevel(target)) / 0.05);
-        
-        result = this.startThreadsIfNotWorking('weaken', target, requiredThreads);
+
+        if (!this.startThreadsIfNotWorking('weaken', target, requiredThreads)) {
+          // return;
+        }
       } 
 
       if (growthAmount > 1) {
         let requiredThreads = Math.ceil(this.ns.growthAnalyze(target, growthAmount));
 
-        result = this.startThreadsIfNotWorking('grow', target, requiredThreads)
+        if (!this.startThreadsIfNotWorking('grow', target, requiredThreads)) {
+          // return;
+        }
       }
 
       if (this.ns.getServerMaxMoney(target) * 0.5 < this.ns.getServerMoneyAvailable(target)) {
@@ -42,11 +43,9 @@ export class BotnetComplex {
             target, this.ns.getServerMoneyAvailable(target) - this.ns.getServerMaxMoney(target) * 0.5
         ) / this.ns.hackAnalyzeChance(target));
 
-        result = this.startThreadsIfNotWorking('hack', target, requiredThreads)
-      }
-
-      if (!result) {
-        return;
+        if (!this.startThreadsIfNotWorking('hack', target, requiredThreads)) {
+          // return;
+        }
       }
     }
   }
@@ -57,7 +56,11 @@ export class BotnetComplex {
 
   startThreadsIfNotWorking(script, target, requiredThreads) {
     if (requiredThreads > this.botnetManager.getWorkingThreadsForScript(script, target)) {
-      return this.botnetManager.startThreads(script, target, requiredThreads);
+      return this.botnetManager.startThreads(
+        script,
+        target,
+        requiredThreads - this.botnetManager.getWorkingThreadsForScript(script, target)
+      );
     }
 
     return true;

@@ -1,13 +1,13 @@
 const config = {
   'botnet': {
-    'target': 'crush-fitness',
+    'target': 'n00dles',
     'script': 'hacks/basic.js',
   },
   'server':{
     'target': 'crush-fitness',
     'script': 'hacks/basic.js',
-    'server_amount': 50,
-    'server_ram_level': 13,
+    'server_amount': 1,
+    'server_ram_level': 7,
     'server_name': 'testowys'
   },
   'botnet-complex': {

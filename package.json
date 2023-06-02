@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build": "npm run buildTs && npm run buildManifest",
+    "buildTs": "tsc -p tsconfig.json",
+    "buildManifest": "npm run lib/generateManifest.js",
+    "clean": "rm -rf \"build/*\"",
+    "copyResources": "mkdir -p \"src\/resources\" && cp -r \"src\/resources\/ build\/\"",
+    "re": "npm-run-all clean buildTs copyResources buildManifest",
+    "webserver": "node bin/webserver.js -p 9182 -d build --enable_cors"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.1.3"
+  }
+}
