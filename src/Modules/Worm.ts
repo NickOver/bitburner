@@ -23,7 +23,7 @@ export default class Worm implements HacknetModule {
       }
 
       this.processManager.startProcessIfNotStarted({
-        'filename': HackingScript.ROOT,
+        'filename': HackingScript['ROOT'],
         'threads': 1,
         'arguments': [target]
       });

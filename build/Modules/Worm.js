@@ -11,7 +11,7 @@ export default class Worm {
                 return;
             }
             this.processManager.startProcessIfNotStarted({
-                'filename': HackingScript.ROOT,
+                'filename': HackingScript['ROOT'],
                 'threads': 1,
                 'arguments': [target]
             });
