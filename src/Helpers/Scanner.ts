@@ -1,6 +1,8 @@
 import { NS } from "Bitburner";
 
 export function findAll(ns: NS): string[] {
+  ns.disableLog('scan');
+
   let servers: string[] = ['home'];
 
   for (let i = 0; i < servers.length; i++) {
@@ -11,6 +13,7 @@ export function findAll(ns: NS): string[] {
     });
   }
 
+  ns.enableLog('scan');
   return servers;
 }
 

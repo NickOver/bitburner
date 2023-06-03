@@ -18,7 +18,7 @@ export default class Worm implements HacknetModule {
     findAllPossibleTargets(this.ns).forEach(target => {
       if (
         this.ns.hasRootAccess(target) &&
-        this.ns.getServerRequiredHackingLevel(target) >= this.ns.getHackingLevel()
+        this.ns.getServerRequiredHackingLevel(target) <= this.ns.getHackingLevel()
       ) {
         return;
       }

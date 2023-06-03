@@ -1,4 +1,5 @@
 export function findAll(ns) {
+    ns.disableLog('scan');
     let servers = ['home'];
     for (let i = 0; i < servers.length; i++) {
         ns.scan(servers[i]).forEach(server => {
@@ -7,6 +8,7 @@ export function findAll(ns) {
             }
         });
     }
+    ns.enableLog('scan');
     return servers;
 }
 export function findAllPossibleTargets(ns) {

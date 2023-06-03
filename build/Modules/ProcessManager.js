@@ -1,7 +1,9 @@
+import { initialize } from "Helpers/HostInitializer";
 import { findAllRootedHosts } from "Helpers/Scanner";
 export default class ProcessManager {
     constructor(ns) {
         this.ns = ns;
+        initialize(ns, ...findAllRootedHosts(this.ns, false));
     }
     startProcessIfNotStarted(process) {
         process['threads'] -= Math.max(0, this.getWorkingThreadsForProcess(process));

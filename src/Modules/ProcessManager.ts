@@ -1,4 +1,6 @@
 import { NS } from "Bitburner";
+import { HackingScript } from "Enum/HackingScript";
+import { initialize } from "Helpers/HostInitializer";
 import { findAllRootedHosts } from "Helpers/Scanner";
 import StartProcess from "Interface/StartProcessinterface";
 
@@ -8,6 +10,7 @@ export default class ProcessManager {
 
   constructor(ns: NS) {
     this.ns = ns;
+    initialize(ns, ...findAllRootedHosts(this.ns, false));
   }
 
   public startProcessIfNotStarted(process: StartProcess) {
