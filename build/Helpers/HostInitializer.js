@@ -5,7 +5,7 @@ export function initialize(ns, ...hosts) {
         files.push(script);
     }
     hosts.forEach(host => {
-        this.ns.killall(host);
-        this.ns.scp(files, host, 'home');
+        ns.killall(host);
+        ns.scp(files, host, 'home');
     });
 }

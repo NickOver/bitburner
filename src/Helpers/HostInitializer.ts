@@ -9,7 +9,7 @@ export function initialize(ns: NS, ...hosts: string[]) {
   }
 
   hosts.forEach(host => {
-    this.ns.killall(host);
-    this.ns.scp(files, host, 'home');
+    ns.killall(host);
+    ns.scp(files, host, 'home');
   });
 }
