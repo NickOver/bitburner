@@ -1,4 +1,5 @@
 import { findAllPossibleTargets } from "Helpers/Scanner";
+import { HackingScript } from "Enum/HackingScript";
 export default class Worm {
     constructor(ns, processManager) {
         this.ns = ns;
@@ -11,7 +12,7 @@ export default class Worm {
                 return;
             }
             this.processManager.startProcessIfNotStarted({
-                'filename': HackingScript['ROOT'],
+                'filename': HackingScript.ROOT,
                 'threads': 1,
                 'arguments': [target]
             });

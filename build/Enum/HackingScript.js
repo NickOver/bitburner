@@ -1,4 +1,4 @@
-var HackingScript;
+export var HackingScript;
 (function (HackingScript) {
     HackingScript["WEAKEN"] = "scripts/weaken.js";
     HackingScript["GROW"] = "scripts/grow.js";
