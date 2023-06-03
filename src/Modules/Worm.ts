@@ -3,6 +3,7 @@ import HacknetModule from "./HacknetModuleInterface";
 import { findAllPossibleTargets } from "Helpers/Scanner";
 import ProcessManager from "./ProcessManager";
 import { HackingScript } from "Enum/HackingScript";
+import { initialize } from "Helpers/HostInitializer";
 
 export default class Worm implements HacknetModule {
 
@@ -28,6 +29,8 @@ export default class Worm implements HacknetModule {
         'threads': 1,
         'arguments': [target]
       });
+
+      initialize(this.ns, target);
     });
   }
 }

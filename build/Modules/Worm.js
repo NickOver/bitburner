@@ -1,5 +1,6 @@
 import { findAllPossibleTargets } from "Helpers/Scanner";
 import { HackingScript } from "Enum/HackingScript";
+import { initialize } from "Helpers/HostInitializer";
 export default class Worm {
     constructor(ns, processManager) {
         this.ns = ns;
@@ -16,6 +17,7 @@ export default class Worm {
                 'threads': 1,
                 'arguments': [target]
             });
+            initialize(this.ns, target);
         });
     }
 }
